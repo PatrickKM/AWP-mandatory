@@ -14,20 +14,21 @@ app.use(morgan('combined')); // Add middleware that logs all http requests to th
 app.use(cors()); // Avoid CORS errors. https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
 
 /**** Some test data ****/
+let answerIdCounter = 0;
 const questions = [
     {
         id: 1,
         question: "How to add Bootstrap to React?",
         answers: [
-            { answerText: "I don't know??", votes: 0},
-            { answerText: "Run npm i bootstrap in your project", votes: 0}
+            { id: answerIdCounter++, answerText: "I don't know??", votes: 0},
+            { id: answerIdCounter++, answerText: "Run npm i bootstrap in your project", votes: 0}
             ]},
     {
         id: 2,
         question: "Class vs Functions in React?",
         answers: [
-            { id: 1, answerText: "You how state classes but not in Functions", votes: 0},
-            { id: 2, answerText: "See answer 1", votes: 0}
+            { id: answerIdCounter++, answerText: "You how state classes but not in Functions", votes: 0},
+            { id: answerIdCounter++, answerText: "See answer 1", votes: 0}
     ]}
 ];
 
@@ -57,22 +58,22 @@ app.post('/api/questions/:id/answers', (req, res) => {
     const id = parseInt(req.params.id);
     const text = req.body.text;
     const question = questions.find(q => q.id === id);
-    question.answers.push(text);
+
+    const answer = {id: answerIdCounter++, answerText: text, votes: 0};
+
+    question.answers.push(answer);
     console.log(question);
     res.json({msg: "Answer added", question: question});
 });
 
 app.put('/api/questions/:id/answers/:aid', (req, res) => {
     const id = parseInt(req.params.id);
-    const answer = answers.find(a => a.id === aid );
-    const question = questions.find(q => q.id === id);
-    const text = req.body.text;
-    question.answers.push(text);
-    answer.answers.push(text);
-    console.log(question);
-    res.json({msg: "Answer added", question: question});
+    const aid = parseInt(req.params.aid);
+    const question = questions.find(q => q.id === parseInt(id));
+    const answer = question.answers.find(a => a.id === parseInt(aid));
+    answer.votes++;
     console.log(answer);
-    res.json({msg: "Answer added", answer: answer});
+    res.json({msg: "Answer updated", answer: answer});
 });
 
 /**** Start! ****/
