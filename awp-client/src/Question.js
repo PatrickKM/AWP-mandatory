@@ -3,15 +3,9 @@ import {Link} from "@reach/router";
 import PostAnswer from './PostAnswer';
 
 class Question extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            votes: ""
-        }
-    }
 
-    onSubmit() {
-        this.props.putVote(this.props.id, this.props.aid);
+    onSubmit(aid) {
+        this.props.putVote(this.props.id, aid);
     }
 
     render() {
@@ -25,7 +19,7 @@ class Question extends Component {
             answers = question.answers.map(a =>
                     <li>
                         {a.answerText}
-                        <button onClick={_ => this.onSubmit()} >
+                        <button onClick={_ => this.onSubmit(a.id)} >
                             Likes: {a.votes}
                         </button>
                     </li>
