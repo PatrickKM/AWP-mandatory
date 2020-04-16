@@ -18,14 +18,20 @@ const questions = [
     {
         id: 1,
         question: "How to add Bootstrap to React?",
-        answers: ["I don't know??", "Run npm i bootstrap in your project"]
-    },
+        answers: [
+            { answerText: "I don't know??", votes: 0},
+            { answerText: "Run npm i bootstrap in your project", votes: 0}
+            ]},
     {
         id: 2,
         question: "Class vs Functions in React?",
-        answers: ["You how state classes but not in Functions", "See answer 1"]
-    },
+        answers: [
+            { id: 1, answerText: "You how state classes but not in Functions", votes: 0},
+            { id: 2, answerText: "See answer 1", votes: 0}
+    ]}
 ];
+
+/* HUSK: mongoose laver id som _id */
 
 /**** Routes ****/
 
@@ -54,6 +60,19 @@ app.post('/api/questions/:id/answers', (req, res) => {
     question.answers.push(text);
     console.log(question);
     res.json({msg: "Answer added", question: question});
+});
+
+app.put('/api/questions/:id/answers/:aid', (req, res) => {
+    const id = parseInt(req.params.id);
+    const answer = answers.find(a => a.id === aid );
+    const question = questions.find(q => q.id === id);
+    const text = req.body.text;
+    question.answers.push(text);
+    answer.answers.push(text);
+    console.log(question);
+    res.json({msg: "Answer added", question: question});
+    console.log(answer);
+    res.json({msg: "Answer added", answer: answer});
 });
 
 /**** Start! ****/

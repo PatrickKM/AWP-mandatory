@@ -16,7 +16,7 @@ class AskQuestion extends Component {
     }
 
     onSubmit() {
-        this.props.askQuestion(this.props.id, this.state.input);
+        this.props.askQuestion(this.state.input);
     }
 
     render() {

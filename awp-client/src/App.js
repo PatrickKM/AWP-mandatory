@@ -12,6 +12,12 @@ class App extends Component {
         }
     }
 
+    incrementCount = () => {
+        this.setState({
+            votes: this.state.questions.answers.votes + 1
+        });
+    };
+
     componentDidMount() {
         this.getData();
     }

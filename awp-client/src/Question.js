@@ -11,7 +11,14 @@ class Question extends Component {
         let answers = [];
         if (question) {
             content = question.question;
-            answers = question.answers.map(a => <li>{a}</li>);
+            answers = question.answers.map(a =>
+                    <li>
+                        {a.answerText}
+                        <button onClick={this.incrementCount}>
+                            Likes: {a.votes}
+                        </button>
+                    </li>
+                );
         }
 
         return (
