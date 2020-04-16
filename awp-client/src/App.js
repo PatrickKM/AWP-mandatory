@@ -12,12 +12,6 @@ class App extends Component {
         }
     }
 
-    incrementCount = () => {
-        this.setState({
-            votes: this.state.questions.answers.votes + 1
-        });
-    };
-
     componentDidMount() {
         this.getData();
     }
@@ -50,6 +44,7 @@ class App extends Component {
         });
         const data = await response.json();
         console.log("Printing the response:", data);
+        this.getData()
     }
 
     async postAnswer(id, text) {
@@ -66,6 +61,7 @@ class App extends Component {
         });
         const data = await response.json();
         console.log("Printing the response:", data);
+        this.getData()
     }
 
     async putVote(id, aid) {
@@ -79,6 +75,7 @@ class App extends Component {
         });
         const data = await response.json();
         console.log("Printing the response:", data);
+        this.getData()
     }
 
     render() {
@@ -86,13 +83,13 @@ class App extends Component {
             <>
                 <h1>QA</h1>
                 <Router>
-                    <Questions path="/" data={this.state.questions}></Questions>
+                    <Questions path="/" data={this.state.questions}/>
                     <Question path="/question/:id"
-                              getQuestion={id => this.getQuestion(id)}
-                              postAnswer={(id, text) => this.postAnswer(id, text)}
-                              putVote={(id, aid) => this.putVote(id, aid)}
-                    ></Question>
-                    <AskQuestion path="/new" askQuestion={(text) => this.askQuestion(text)}></AskQuestion>
+                        getQuestion={id => this.getQuestion(id)}
+                        postAnswer={(id, text) => this.postAnswer(id, text)}
+                        putVote={(id, aid) => this.putVote(id, aid)}
+                    />
+                    <AskQuestion path="/new" askQuestion={(text) => this.askQuestion(text)}/>
                 </Router>
             </>
         );

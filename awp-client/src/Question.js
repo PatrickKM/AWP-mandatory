@@ -3,8 +3,14 @@ import {Link} from "@reach/router";
 import PostAnswer from './PostAnswer';
 
 class Question extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            votes: ""
+        }
+    }
 
-    onClick() {
+    onSubmit() {
         this.props.putVote(this.props.id, this.props.aid);
     }
 
@@ -19,7 +25,7 @@ class Question extends Component {
             answers = question.answers.map(a =>
                     <li>
                         {a.answerText}
-                        <button onClick={this.incrementCount} putVote={(id, aid) => this.putVote(id, aid)}>
+                        <button onClick={_ => this.onSubmit()} >
                             Likes: {a.votes}
                         </button>
                     </li>
