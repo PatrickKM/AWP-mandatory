@@ -36,16 +36,18 @@ const questions = [
 
 /**** Routes ****/
 
-// Return all recipes in data
-app.get('/api/questions', (req, res) => res.json(questions));
+// GET Questions (all)
+app.get('/api/questions', (req, res) =>
+    res.json(questions));
 
+// GET Question (by id)
 app.get('/api/questions/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const question = questions.find(q => q.id === id);
     res.json({msg: "Question added", question: question});
 });
 
-// Ask Question
+// POST Question
 app.post('/api/questions/', (req, res) => {
     const text = req.body.text;
     questions.push({id: Math.floor(Math.random() * 101), question: text, answers: []});
@@ -53,7 +55,7 @@ app.post('/api/questions/', (req, res) => {
     res.json({msg: "Question added", question: text});
 });
 
-// PostAnswer
+// POST Answer (in id of Question)
 app.post('/api/questions/:id/answers', (req, res) => {
     const id = parseInt(req.params.id);
     const text = req.body.text;
@@ -66,6 +68,7 @@ app.post('/api/questions/:id/answers', (req, res) => {
     res.json({msg: "Answer added", question: question});
 });
 
+// PUT Vote (in id of question in id of Answer)
 app.put('/api/questions/:id/answers/:aid', (req, res) => {
     const id = parseInt(req.params.id);
     const aid = parseInt(req.params.aid);
